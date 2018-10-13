@@ -2,6 +2,7 @@
 
 class GoogleController {
     private $service;
+
     public static $ENCODING = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     public static $FILE_PATH = "C:\Users\Logan Guthrie\Development\code\CSVConcatPHP";
     private static $NAME = "CSV Concatenation";
@@ -15,7 +16,7 @@ class GoogleController {
         $client = new ClientCreator();
         $googleClient = $client->getClient();
 
-        $this->service = new Google_Service_Drive($googleClient)
+        $this->service = new Google_Service_Drive($googleClient);
     }
     /**
      * Defines google drive API parameters
