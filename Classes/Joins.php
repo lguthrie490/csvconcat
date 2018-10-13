@@ -1,28 +1,28 @@
 <?php
 class Joins {
 
-    /**
-     * @param array $files
-     * @param $result
-     *
-     * @throws Exception
-     */
-    function joinFiles(array $files, $result) {
 
-        $this->checkIfArray($files);
 
-        $wH = fopen($result, "w+");
+    public function removeFirstLine($filePath) {
+        $file = fopen($filePath, 'r');
 
-        foreach($files as $file) {
-            $fh = fopen($file, "r");
-            while(!feof($fh)) {
-                fwrite($wH, fgets($fh));
-            }
-            fclose($fh);
-            unset($fh);
+        $data = array();
+
+        while (($data_tmp = fgetcsv($file, 1000, ",")) !== FALSE) {
+            $data[] = $data_tmp;
         }
-        fclose($wH);
-        unset($wH);
+
+        fclose($file);
+
+        array_shift($data);
+
+        $file = fopen('words.csv', 'w');
+
+        foreach($data as $d){
+            fputcsv($file,$d);
+        }
+
+        fclose($file);
     }
 
     /**
