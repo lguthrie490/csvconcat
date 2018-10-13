@@ -8,7 +8,6 @@ class Combiner {
         $fileNamesArray = $this->putFilenamesInArray($this->pathToDirectory);
         $filesWithPathsArray = $this->setPath($fileNamesArray, $this->pathToDirectory);
 
-
     }
 
     /**
