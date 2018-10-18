@@ -1,31 +1,40 @@
 <?php
 
 class GoogleUploader {
-    private $fileDetails;
+    private $filePath;
+    private $service;
+
 
     public function __construct() {
         $today = date("Y-m-d");
 
-        $this->fileDetails = array(
-            'name' => 'CSV Report ' . $today,
-            'mimeType' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        );
+        $client = new ClientCreator();
+        $googleClient = $client->getClient();
+
+        $this->service = new Google_service_Drive($googleClient);
     }
 
+    /**
+     * @param $pathToFile string
+     *
+     * @return string
+     */
     public function uploadFile($pathToFile) {
-        $driveService = new Google_Service_Drive();
 
-        $fileMetadata = new Google_Service_Drive_DriveFile($this->fileDetails);
+        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+            'name' => 'CSVUPLOADTEST.csv',
+            'mimeType' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        ));
 
         $content = file_get_contents($pathToFile);
 
-        $file = $driveService->files->create($fileMetadata, array(
+        $file = $this->service->files->create($fileMetadata, array(
             'data' => $content,
             'mimeType' => 'text/csv',
             'uploadType' => 'resumable',
             'fields' => 'id'
         ));
 
-        printf("File ID: %s\n, $file->id");
+        return $file->id;
     }
 }
