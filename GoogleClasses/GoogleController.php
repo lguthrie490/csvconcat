@@ -1,32 +1,51 @@
 <?php
 
 class GoogleController {
-    private $service;
+    private $googleUploader;
 
     public static $ENCODING = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-    public static $FILE_PATH = "C:\Users\Logan Guthrie\Development\code\CSVConcatPHP";
+    public static $FILE_PATH = "/mnt/c/Users/Logan Guthrie/Development/code/CSVConcatPHP/";
     private static $NAME = "CSV Concatenation";
-    private static $CREDENTIALS = "C:\Users\Logan Guthrie\Development\code\CSVConcatPHP\keys";
-    private static $SECRET = "C:\Users\Logan Guthrie\Development\code\CSVConcatPHP\keys\client_secret_228731879602-u4gitai3qr1d59rcdbrpohht99fm1lil.apps.googleusercontent.com";
+    private static $CREDENTIALS = "/mnt/c/Users/Logan Guthrie/Development/code/CSVConcatPHP/keys/drive.googleapis.com-csv-concatenation-new.json";
+    private static $SECRET = "/mnt/c/Users/Logan Guthrie/Development/code/CSVConcatPHP/keys/client_secret_228731879602-u4gitai3qr1d59rcdbrpohht99fm1lil.apps.googleusercontent.com.json";
 
     public function __construct() {
         $this->commandLineCheck();
         $this->defineScopes();
 
-        $client = new ClientCreator();
-        $googleClient = $client->getClient();
-
-        $this->service = new Google_Service_Drive($googleClient);
+        $this->googleUploader = new GoogleUploader();
     }
+
+    /**
+     * Uploads file
+     * Returns file ID
+     *
+     * @return string
+     */
+    public function doUploadFiles() {
+        return $this->googleUploader->uploadFile(Main::$OUTPUT);
+    }
+
+    public function doShareFiles($fileId) {
+        $googleShare = new GoogleShare($fileId);
+
+        $googleShare->shareFile('lguthrie@acuityeyegroup.com');
+    }
+
     /**
      * Defines google drive API parameters
+     *
+     * For more info on scope privileges, check out:
+     * https://developers.google.com/resources/api-libraries/documentation/drive/v3/php/latest/class-Google_Service_Drive.html
+     *
      */
     private function defineScopes() {
         define('APPLICATION_NAME', GoogleController::$NAME);
         define('CREDENTIALS_PATH', GoogleController::$CREDENTIALS);
         define('CLIENT_SECRET_PATH', GoogleController::$SECRET);
         define('SCOPES', implode(' ', array(
-                Google_Service_Drive::DRIVE)
+                Google_Service_Drive::DRIVE
+            )
         ));
     }
 
