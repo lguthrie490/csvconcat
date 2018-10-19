@@ -1,32 +1,34 @@
 <?php
 
 class Main {
-    public static $OUTPUT = '/mnt/c/Users/Logan Guthrie/Development/code/CSVConcatPHP/Output/file.csv';
+    private $googleAppName;
+    private $googleCredentials;
+    private $googleSecret;
 
-    public function uploadAndShareFile() {
-        $googleController = new GoogleController();
-
-        $googleController->doShareFiles('1POVVj5btF7PRA7Uv7P1v4DgDEkO1MA6H-SeHHlFmbEk');
+    public function __construct($googleAppName, $googleCredentials, $googleSecret) {
+        $this->googleAppName = $googleAppName;
+        $this->googleCredentials = $googleCredentials;
+        $this->googleSecret = $googleSecret;
     }
 
     /**
-     * @return array|bool
+     * @param $inputPath
+     *
+     * @throws Exception
      */
-    public function getReadArray() {
-        $read = new Read();
-
-        return $read->readFilesAndSetPath(INPUT);
+    public function combineFiles($inputPath) {
+        new Combiner($inputPath);
     }
 
-    public function joinFiles(array $fileArray, $output) {
-        $joins = new Joins();
+    /**
+     * @param string $fileName
+     * @param string $targetEmail
+     * @param string $outputPath
+     */
+    public function uploadAndShareFile($fileName, $targetEmail, $outputPath) {
+        $googleController = new GoogleController($this->googleAppName, $this->googleCredentials, $this->googleSecret);
 
-        $joins->joinFiles($fileArray, $output);
-    }
-
-    public function concatCSV() {
-        $dir = __DIR__;
-
-        $this->getReadArray($dir);
+        $fileId = $googleController->doUploadFiles($fileName, $outputPath);
+        $googleController->doShareFiles($fileId, $targetEmail);
     }
 }

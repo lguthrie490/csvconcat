@@ -1,28 +1,28 @@
 <?php
 
 class GoogleUploader {
-    private $filePath;
     private $service;
 
-
-    public function __construct() {
-        $today = date("Y-m-d");
-
-        $client = new ClientCreator();
-        $googleClient = $client->getClient();
-
-        $this->service = new Google_service_Drive($googleClient);
+    /**
+     * GoogleUploader constructor.
+     *
+     * @param Google_Client $client
+     */
+    public function __construct(Google_Client $client) {
+        $this->service = new Google_service_Drive($client);
     }
 
     /**
+     * @todo Change upload name
      * @param $pathToFile string
+     * @param string $fileName
      *
-     * @return string
+     * @return string Google Drive File ID
      */
-    public function uploadFile($pathToFile) {
+    public function uploadFile($pathToFile, $fileName) {
 
         $fileMetadata = new Google_Service_Drive_DriveFile(array(
-            'name' => 'CSVUPLOADTEST.csv',
+            'name' => $fileName,
             'mimeType' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         ));
 

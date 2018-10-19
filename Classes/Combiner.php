@@ -1,26 +1,28 @@
 <?php
 class Combiner {
-    private $pathToDirectory;
 
+    /**
+     * Combiner constructor.
+     * @param string $pathToDirectory
+     *
+     * @throws Exception
+     */
     public function __construct($pathToDirectory) {
-        $this->pathToDirectory = $pathToDirectory;
+        $fileNamesArray = $this->putFilenamesInArray($pathToDirectory);
+        $filesWithPathsArray = $this->setPathToFiles($fileNamesArray, $pathToDirectory);
 
-        $fileNamesArray = $this->putFilenamesInArray($this->pathToDirectory);
-        $filesWithPathsArray = $this->setPath($fileNamesArray, $this->pathToDirectory);
-
+        $this->joinFiles($filesWithPathsArray, Main::$OUTPUT);
     }
 
     /**
      * @param array $files
-     * @param $result
+     * @param string $outputFilePath
      *
      * @throws Exception
      */
-    private function joinFiles(array $files, $result) {
+    private function joinFiles(array $files, $outputFilePath) {
 
-        $combinedFile = fopen($result, "w+");
-
-        $this->checkIfArray($files);
+        $combinedFile = fopen($outputFilePath, "w+");
 
         foreach($files as $file) {
             $readFile = fopen($file, "r");
@@ -36,9 +38,7 @@ class Combiner {
     }
 
     /**
-     * @todo error handling
-     *
-     * @param $dir string Directory files to be concatted are located in
+     * @param $dir string Directory to files
      *
      * @return array | boolean
      */
@@ -51,14 +51,12 @@ class Combiner {
     }
 
     /**
-     * @todo error handling
-     *
      * @param array $files
      * @param $path
      *
      * @return array|bool
      */
-    private function setPath(array $files, $path) {
+    private function setPathToFiles(array $files, $path) {
         if(is_array($files)) {
             foreach ($files as &$file) {
                 $file = $path . $file;

@@ -6,15 +6,12 @@ class GoogleShare {
 
     /**
      * GoogleShare constructor.
-     * @param $fileId string
      *
-     * @throws Google_Exception
+     * @param $fileId string
+     * @param $client Google_Client
      */
-    public function __construct($fileId) {
-        $client = new ClientCreator();
-        $googleClient = $client->getClient();
-
-        $this->service = new Google_Service_Drive($googleClient);
+    public function __construct($fileId, Google_Client $client) {
+        $this->service = new Google_Service_Drive($client);
         $this->fileId = $fileId;
     }
 
