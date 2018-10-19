@@ -3,15 +3,16 @@ class Combiner {
 
     /**
      * Combiner constructor.
-     * @param string $pathToDirectory
+     * @param $pathToDirectory
+     * @param $outputFilePath
      *
      * @throws Exception
      */
-    public function __construct($pathToDirectory) {
+    public function __construct($pathToDirectory, $outputFilePath) {
         $fileNamesArray = $this->putFilenamesInArray($pathToDirectory);
         $filesWithPathsArray = $this->setPathToFiles($fileNamesArray, $pathToDirectory);
 
-        $this->joinFiles($filesWithPathsArray, Main::$OUTPUT);
+        $this->joinFiles($filesWithPathsArray, $outputFilePath);
     }
 
     /**

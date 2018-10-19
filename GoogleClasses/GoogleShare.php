@@ -15,6 +15,9 @@ class GoogleShare {
         $this->fileId = $fileId;
     }
 
+    /**
+     * @param string $targetEmail
+     */
     public function shareFile($targetEmail) {
         $this->service->getClient()->setUseBatch(true);
 

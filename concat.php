@@ -25,5 +25,5 @@ const EMAIL = 'lguthrie@acuityeyegroup.com';
 
 $main = new Main(GOOGLE_APPNAME, GOOGLE_CREDENTIALS, GOOGLE_SECRET);
 
-$main->combineFiles(INPUT);
+$main->combineFiles(INPUT, OUTPUT);
 $main->uploadAndShareFile(FILENAME, EMAIL, OUTPUT);

@@ -12,12 +12,13 @@ class Main {
     }
 
     /**
-     * @param $inputPath
+     * @param string $inputPath
+     * @param string $outputPath
      *
      * @throws Exception
      */
-    public function combineFiles($inputPath) {
-        new Combiner($inputPath);
+    public function combineFiles($inputPath, $outputPath) {
+        new Combiner($inputPath, $outputPath);
     }
 
     /**
