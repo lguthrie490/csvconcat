@@ -16,14 +16,15 @@ const GOOGLE_CREDENTIALS = __DIR__ . '/keys/drive.googleapis.com-csv-concatenati
 CONST GOOGLE_SECRET = __DIR__ . '/keys/client_secret_228731879602-u4gitai3qr1d59rcdbrpohht99fm1lil.apps.googleusercontent.com.json';
 
 // File Paths
+const HEADER = __DIR__ . 'header.csv';
 const INPUT = __DIR__ . '/Files/';
 const OUTPUT = __DIR__ . '/Output/file.csv';
 
 // Set the name of the file to be uploaded to google drive
-const FILENAME = 'that.csv';
+const FILENAME = 'TestCSVCombiner.csv';
 const EMAIL = 'lguthrie@acuityeyegroup.com';
 
 $main = new Main(GOOGLE_APPNAME, GOOGLE_CREDENTIALS, GOOGLE_SECRET);
 
-$main->combineFiles(INPUT, OUTPUT);
+$main->combineFiles(INPUT, OUTPUT, HEADER);
 $main->uploadAndShareFile(FILENAME, EMAIL, OUTPUT);
