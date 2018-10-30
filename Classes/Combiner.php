@@ -3,16 +3,45 @@ class Combiner {
 
     /**
      * Combiner constructor.
-     * @param $pathToDirectory
-     * @param $outputFilePath
+     * @param string $pathToDirectory
+     * @param string $outputFilePath
      *
      * @throws Exception
      */
-    public function __construct($pathToDirectory, $outputFilePath) {
+    public function __construct($pathToDirectory, $outputFilePath, $headerFilePath) {
         $fileNamesArray = $this->putFilenamesInArray($pathToDirectory);
         $filesWithPathsArray = $this->setPathToFiles($fileNamesArray, $pathToDirectory);
 
-        $this->joinFiles($filesWithPathsArray, $outputFilePath);
+        $this->removeFirstLineInArray($filesWithPathsArray);
+
+        $arrayWithHeader = $this->addHeaderToArray($filesWithPathsArray, $headerFilePath);
+
+        $this->joinFiles($arrayWithHeader, $outputFilePath);
+    }
+
+    public function combineFiles() {
+
+    }
+
+    /**
+     * @param array $fileArray
+     */
+    private function removeFirstLineInArray(array $fileArray) {
+        foreach ($fileArray as $file) {
+            $this->removeFirstLine($file);
+        }
+    }
+
+    /**
+     * Removes the first line of the .csv file indiscriminately
+     *
+     * @param string $filePath
+     */
+    public function removeFirstLine($filePath) {
+        // Reads and deletes the first line of the csv
+        $shell = 'sed -i 1d ';
+
+        shell_exec($shell . '"' . $filePath . '"');
     }
 
     /**
@@ -49,6 +78,20 @@ class Combiner {
         } else {
             return FALSE;
         }
+    }
+
+    /**
+     * Adds .csv file containing only headers to the front of the file array
+     *
+     * @param array $fileArray
+     * @param string $headerFilePath
+     *
+     * @return array
+     */
+    private function addHeaderToArray(array $fileArray, $headerFilePath) {
+        array_unshift($fileArray, $headerFilePath);
+
+        return $fileArray;
     }
 
     /**
