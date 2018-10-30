@@ -17,8 +17,8 @@ class Main {
      *
      * @throws Exception
      */
-    public function combineFiles($inputPath, $outputPath) {
-        new Combiner($inputPath, $outputPath);
+    public function combineFiles($inputPath, $outputPath, $headerPath) {
+        new Combiner($inputPath, $outputPath, $headerPath);
     }
 
     /**
