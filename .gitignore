@@ -4,3 +4,4 @@ composer.lock
 composer-setup.php
 keys/*
 Output/*
+Files/*
