@@ -5,6 +5,13 @@ class Main {
     private $googleCredentials;
     private $googleSecret;
 
+    /**
+     * Main constructor.
+     *
+     * @param string $googleAppName
+     * @param string $googleCredentials
+     * @param string $googleSecret
+     */
     public function __construct($googleAppName, $googleCredentials, $googleSecret) {
         $this->googleAppName = $googleAppName;
         $this->googleCredentials = $googleCredentials;
@@ -14,11 +21,13 @@ class Main {
     /**
      * @param string $inputPath
      * @param string $outputPath
+     * @param string $headerPath
      *
      * @throws Exception
      */
     public function combineFiles($inputPath, $outputPath, $headerPath) {
-        new Combiner($inputPath, $outputPath, $headerPath);
+        $combiner = new Combiner();
+        $combiner->setFileArray($inputPath, $outputPath, $headerPath);
     }
 
     /**
