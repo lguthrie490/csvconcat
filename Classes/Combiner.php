@@ -1,26 +1,21 @@
 <?php
 class Combiner {
-
     /**
-     * Combiner constructor.
-     * @param string $pathToDirectory
-     * @param string $outputFilePath
+     * @param $inputPath
+     * @param $outputPath
+     * @param $headerPath
      *
      * @throws Exception
      */
-    public function __construct($pathToDirectory, $outputFilePath, $headerFilePath) {
-        $fileNamesArray = $this->putFilenamesInArray($pathToDirectory);
-        $filesWithPathsArray = $this->setPathToFiles($fileNamesArray, $pathToDirectory);
+    public function setFileArray($inputPath, $outputPath, $headerPath) {
+        $fileNamesArray = $this->putFilenamesInArray($inputPath);
+        $filesWithPathsArray = $this->setPathToFiles($fileNamesArray, $inputPath);
 
         $this->removeFirstLineInArray($filesWithPathsArray);
 
-        $arrayWithHeader = $this->addHeaderToArray($filesWithPathsArray, $headerFilePath);
+        $arrayWithHeader = $this->addHeaderToArray($filesWithPathsArray, $headerPath);
 
-        $this->joinFiles($arrayWithHeader, $outputFilePath);
-    }
-
-    public function combineFiles() {
-
+        $this->joinFiles($arrayWithHeader, $outputPath);
     }
 
     /**
@@ -28,20 +23,10 @@ class Combiner {
      */
     private function removeFirstLineInArray(array $fileArray) {
         foreach ($fileArray as $file) {
-            $this->removeFirstLine($file);
+            $shell = "sed -i 1d";
+
+            shell_exec($shell . ' "' . $file . '"');
         }
-    }
-
-    /**
-     * Removes the first line of the .csv file indiscriminately
-     *
-     * @param string $filePath
-     */
-    public function removeFirstLine($filePath) {
-        // Reads and deletes the first line of the csv
-        $shell = 'sed -i 1d ';
-
-        shell_exec($shell . '"' . $filePath . '"');
     }
 
     /**
