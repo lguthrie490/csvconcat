@@ -1,6 +1,7 @@
 <?php
 
 class Main {
+    private $root;
     private $googleAppName;
     private $googleCredentials;
     private $googleSecret;
@@ -8,26 +9,23 @@ class Main {
     /**
      * Main constructor.
      *
-     * @param string $googleAppName
-     * @param string $googleCredentials
-     * @param string $googleSecret
+     * @param $root
+     * @param $googleAppName
+     * @param $googleCredentials
+     * @param $googleSecret
      */
-    public function __construct($googleAppName, $googleCredentials, $googleSecret) {
+    public function __construct($root, $googleAppName, $googleCredentials, $googleSecret) {
+        $this->root = $root;
         $this->googleAppName = $googleAppName;
         $this->googleCredentials = $googleCredentials;
         $this->googleSecret = $googleSecret;
     }
 
-    /**
-     * @param string $inputPath
-     * @param string $outputPath
-     * @param string $headerPath
-     *
-     * @throws Exception
-     */
-    public function combineFiles($inputPath, $outputPath, $headerPath) {
+    public function combineCsvFiles() {
+        $fileOps = new FileOperations($this->root);
         $combiner = new Combiner();
-        $combiner->setFileArray($inputPath, $outputPath, $headerPath);
+
+        $combiner->joinFiles($fileOps->getInputArray(), $fileOps->getOutput());
     }
 
     /**
