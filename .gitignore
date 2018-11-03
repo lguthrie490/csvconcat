@@ -1,0 +1,8 @@
+.idea
+vendor
+composer.lock
+composer-setup.php
+keys/*
+Output/*
+Files/*
+/Files-old/*.csv
