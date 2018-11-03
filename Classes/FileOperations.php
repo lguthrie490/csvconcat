@@ -47,7 +47,7 @@ class FileOperations {
     private function setOutput($root) {
         $today = date('m-Y');
 
-        $this->output = $root . '/Output/' . $today . '.csv';
+        $this->output = $root . '/Output/' . 'ExpectedAppointmentDashboard-' . $today . '.csv';
     }
 
     private function setInput($root) {

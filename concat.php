@@ -20,7 +20,7 @@ const ROOT = __DIR__;
 $today = date('m-Y');
 
 // Set the name of the file to be uploaded to google drive
-$FILENAME = 'ExpectedAppointementDashboard-' .$today . '.csv';
+$FILENAME = 'ExpectedAppointmentDashboard-' . $today;
 const EMAIL = 'lguthrie@acuityeyegroup.com';
 
 $main = new Main(ROOT,GOOGLE_APPNAME, GOOGLE_CREDENTIALS, GOOGLE_SECRET);
