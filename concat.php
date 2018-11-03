@@ -26,4 +26,4 @@ const EMAIL = 'lguthrie@acuityeyegroup.com';
 $main = new Main(ROOT,GOOGLE_APPNAME, GOOGLE_CREDENTIALS, GOOGLE_SECRET);
 
 $main->combineCsvFiles();
-$main->uploadAndShareFile($FILENAME, EMAIL,  __DIR__ . '/Output/file.csv');
+$main->uploadAndShareFile($FILENAME, EMAIL,  __DIR__ . '/Output/' . $FILENAME . '.csv');
