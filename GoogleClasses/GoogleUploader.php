@@ -23,7 +23,7 @@ class GoogleUploader {
 
         $fileMetadata = new Google_Service_Drive_DriveFile(array(
             'name' => $fileName,
-            'mimeType' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            'mimeType' => 'text/csv'
         ));
 
         $content = file_get_contents($pathToFile);
